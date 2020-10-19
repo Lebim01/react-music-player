@@ -2141,11 +2141,13 @@ export default class ReactJkMusicPlayer extends PureComponent {
 
   updateMediaSessionMetadata = () => {
     if ('mediaSession' in navigator && this.props.showMediaSession) {
-      const { name, cover, singer } = this.state
+      const { name, subtitle, price, cover, singer } = this.state
       const mediaMetaDataConfig = {
         title: name,
         artist: singer,
         album: name,
+        subtitle,
+        price
       }
       if (cover) {
         mediaMetaDataConfig.artwork = [

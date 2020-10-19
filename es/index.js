@@ -1749,12 +1749,16 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
       if ('mediaSession' in navigator && _this.props.showMediaSession) {
         var _this$state16 = _this.state,
             name = _this$state16.name,
+            subtitle = _this$state16.subtitle,
+            price = _this$state16.price,
             cover = _this$state16.cover,
             singer = _this$state16.singer;
         var mediaMetaDataConfig = {
           title: name,
           artist: singer,
-          album: name
+          album: name,
+          subtitle: subtitle,
+          price: price
         };
 
         if (cover) {
