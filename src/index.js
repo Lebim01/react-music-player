@@ -923,7 +923,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
       return
     }
     const playIndex = audioLists.findIndex((audio) => audio.id === playId)
-    const { name, cover, musicSrc, singer, lyric = '' } =
+    const { name, subtitle, price, cover, musicSrc, singer, lyric = '' } =
       audioLists[playIndex] || {}
 
     const loadAudio = (originMusicSrc) => {
@@ -931,6 +931,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
         {
           name,
           cover,
+          subtitle,
+          price,
           musicSrc: originMusicSrc,
           singer,
           playId,
