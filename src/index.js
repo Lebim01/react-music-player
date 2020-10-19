@@ -1965,7 +1965,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
 
   updateAudioLists = (audioLists) => {
     const newAudioLists = [
-      ...this.state.audioLists,
+      //...this.state.audioLists,
       ...audioLists.filter(
         (audio) =>
           this.state.audioLists.findIndex(
