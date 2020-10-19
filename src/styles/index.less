@@ -5,6 +5,10 @@
 @import '~rc-slider/assets/index.css';
 @import '~rc-switch/assets/index.css';
 
+.font-acent {
+  color: @primary-color;
+}
+
 .react-jinke-music-player-main {
   touch-action: none;
   font-family: inherit;
@@ -296,6 +300,12 @@
       }
 
       .center-section {
+        display: grid;
+        grid-template-columns: min-content min-content min-content min-content min-content;
+        grid-gap: 15px;
+        align-items: center;
+        justify-self: center;
+
         .prev-audio,
         .next-audio {
           svg {
@@ -304,25 +314,18 @@
         }
 
         .play-btn {
-          padding: 0 18px;
-
           svg {
             font-size: 26px;
           }
         }
-
-        .group {
-          display: flex;
-          align-items: center;
-          place-content: center;
-        }
       }
 
       .right-section {
-        display: inline-flex;
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: 15px;
         align-items: center;
         align-content: center;
-        flex-basis: 15%;
 
         > .group {
           &,
@@ -336,7 +339,6 @@
 
           text-align: center;
           flex: 1;
-          margin: 0 10px;
           display: inline-flex;
           justify-content: center;
           align-items: center;
@@ -401,7 +403,6 @@
 
         .audio-lists-btn {
           user-select: none;
-          min-width: 60px;
           height: 28px;
           position: relative;
           transition: color, background-color @common-animate-time;

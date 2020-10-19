@@ -38,7 +38,8 @@ import {
   VolumeUnmuteIcon,
   AddIcon,
   DotsIcon,
-  CartIcon
+  CartIcon,
+  RandomIcon
 } from './components/Icon'
 import AudioPlayerMobile from './components/PlayerMobile'
 import PlayModel from './components/PlayModel'
@@ -89,7 +90,8 @@ const DEFAULT_ICON = {
   empty: <EmptyIcon />,
   add: <AddIcon />,
   dots: <DotsIcon />,
-  cart: <CartIcon />
+  cart: <CartIcon />,
+  random: <RandomIcon />,
 }
 
 export default class ReactJkMusicPlayer extends PureComponent {
@@ -392,6 +394,26 @@ export default class ReactJkMusicPlayer extends PureComponent {
       </span>
     )
 
+    const LoopModeComponent = (
+      <span
+        className={cls(`group loop-btn ${currentPlayMode === 'singleLoop' ? 'font-acent' : ''}`)}
+        onClick={this.toggleLoopMode}
+        title={locale.playModeText['singleLoop']}
+      >
+        {this.renderLoopIcon(currentPlayMode)}
+      </span>
+    )
+
+    const RandomModeComponent = (
+      <span
+        className={cls(`group loop-btn ${currentPlayMode === 'shufflePlay' ? 'font-acent' : ''}`)}
+        onClick={this.toggleRandomMode}
+        title={locale.playModeText['shufflePlay']}
+      >
+        {this.renderRandomIcon(currentPlayMode)}
+      </span>
+    )
+
     const miniProcessBarR = isMobile ? 30 : 40
 
     const DestroyComponent = showDestroy && (
@@ -529,9 +551,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
                 {/* lgtm [js/trivial-conditional] */}
                 {(!autoHiddenCover || (autoHiddenCover && cover)) && (
                   <div
-                    className={cls('img-content', 'img-rotate', {
-                      'img-rotate-pause': !playing || !cover,
-                    })}
+                    className={cls('img-content')}
                     style={{ backgroundImage: `url(${cover})` }}
                     onClick={() => this.onCoverClick()}
                   />
@@ -572,7 +592,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
                 {loading ? (
                   this.iconMap.loading
                 ) : showPlay ? (
-                  <span className="group">
+                  <>
+                    {RandomModeComponent}
                     <span
                       className="group prev-audio"
                       title={locale.previousTrackText}
@@ -581,7 +602,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
                       {this.iconMap.prev}
                     </span>
                     <span
-                      className="group play-btn"
+                      className={`group play-btn ${playing ? 'font-acent' : ''}`}
                       onClick={this.onTogglePlay}
                       title={
                         playing
@@ -598,7 +619,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
                     >
                       {this.iconMap.next}
                     </span>
-                  </span>
+                    {LoopModeComponent}
+                  </>
                 ) : undefined}
               </div>
 
@@ -627,8 +649,6 @@ export default class ReactJkMusicPlayer extends PureComponent {
                     {...sliderBaseOptions}
                   />
                 </span>
-
-                {PlayModeComponent}
 
                 {LyricComponent}
 
@@ -801,6 +821,44 @@ export default class ReactJkMusicPlayer extends PureComponent {
     }, this.props.playModeShowTime)
   }
 
+  toggleLoopMode = () => {
+    let index = this.state.playMode === 'order' ? 1 : 3
+    const playMode =
+      index === this._PLAY_MODE_LENGTH_ - 1
+        ? this._PLAY_MODE_[0]
+        : this._PLAY_MODE_[++index]
+    this.setState({
+      playMode,
+      playModelNameVisible: true,
+      playModeTipVisible: true,
+    })
+    this.props.onPlayModeChange && this.props.onPlayModeChange(playMode)
+
+    clearTimeout(this.playModelTimer)
+    this.playModelTimer = setTimeout(() => {
+      this.setState({ playModelNameVisible: false, playModeTipVisible: false })
+    }, this.props.playModeShowTime)
+  }
+
+  toggleRandomMode = () => {
+    let index = this.state.playMode === 'order' ? 2 : 3
+    const playMode =
+      index === this._PLAY_MODE_LENGTH_ - 1
+        ? this._PLAY_MODE_[0]
+        : this._PLAY_MODE_[++index]
+    this.setState({
+      playMode,
+      playModelNameVisible: true,
+      playModeTipVisible: true,
+    })
+    this.props.onPlayModeChange && this.props.onPlayModeChange(playMode)
+
+    clearTimeout(this.playModelTimer)
+    this.playModelTimer = setTimeout(() => {
+      this.setState({ playModelNameVisible: false, playModeTipVisible: false })
+    }, this.props.playModeShowTime)
+  }
+
   // 渲染播放模式 对应按钮
   renderPlayModeIcon = (playMode) => {
     const animateProps = {
@@ -824,6 +882,20 @@ export default class ReactJkMusicPlayer extends PureComponent {
         IconNode = cloneElement(this.iconMap.order, animateProps)
     }
     return IconNode
+  }
+
+  renderLoopIcon = (playMode) => {
+    const animateProps = {
+      className: 'react-jinke-music-player-mode-icon' + playMode === 'singleLoop' ? 'font-acent' : '',
+    }
+    return cloneElement(this.iconMap.loop, animateProps)
+  }
+
+  renderRandomIcon = (playMode) => {
+    const animateProps = {
+      className: 'react-jinke-music-player-mode-icon' + playMode === 'shufflePlay' ? 'font-acent' : '',
+    }
+    return cloneElement(this.iconMap.random, animateProps)
   }
 
   /**

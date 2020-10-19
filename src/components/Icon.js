@@ -1,14 +1,15 @@
 import React from 'react'
-import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa'
+import { FaPause, FaPlay } from 'react-icons/fa'
 
 export {
   FaHeadphones as FaHeadphonesIcon,
   FaRegMinusSquare as FaMinusSquareOIcon,
   FaSpinner as LoadIcon,
   FaSyncAlt as ReloadIcon,
+  FaRandom as RandomIcon
 } from 'react-icons/fa'
 export { BsThreeDots as DotsIcon } from 'react-icons/bs'
-export { FiChevronsDown as ArrowDownIcon, FiPlus as AddIcon } from 'react-icons/fi'
+export { FiChevronsDown as ArrowDownIcon, FiPlus as AddIcon, FiRepeat as LoopIcon } from 'react-icons/fi'
 export {
   GoMute as VolumeMuteIcon,
   GoUnmute as VolumeUnmuteIcon,
@@ -17,7 +18,6 @@ export {
   MdClose as CloseIcon,
   MdLibraryMusic as EmptyIcon,
   MdRepeat as RepeatIcon,
-  MdRepeatOne as LoopIcon,
   MdSkipNext as NextAudioIcon,
   MdSkipPrevious as PrevAudioIcon,
   MdViewHeadline as OrderPlayIcon,
@@ -34,8 +34,8 @@ export {
 } from 'react-icons/ti'
 
 export const AnimatePlayIcon = () => (
-  <FaPlayCircle className="react-jinke-music-player-play-icon" />
+  <FaPlay className="react-jinke-music-player-play-icon" />
 )
 export const AnimatePauseIcon = () => (
-  <FaPauseCircle className="react-jinke-music-player-pause-icon" />
+  <FaPause className="react-jinke-music-player-pause-icon" />
 )

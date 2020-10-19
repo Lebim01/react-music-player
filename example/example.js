@@ -211,7 +211,7 @@ const options = {
   showDownload: false,
 
   // loop button display of the audio player panel   [type `Boolean` default `true`]
-  showPlayMode: false,
+  showPlayMode: true,
 
   // theme toggle switch  display of the audio player panel   [type `Boolean` default `true`]
   showThemeSwitch: false,
