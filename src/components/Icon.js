@@ -2,13 +2,13 @@ import React from 'react'
 import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa'
 
 export {
-  FaBook as LyricIcon,
   FaHeadphones as FaHeadphonesIcon,
   FaRegMinusSquare as FaMinusSquareOIcon,
   FaSpinner as LoadIcon,
   FaSyncAlt as ReloadIcon,
 } from 'react-icons/fa'
-export { FiChevronsDown as ArrowDownIcon } from 'react-icons/fi'
+export { BsThreeDots as DotsIcon } from 'react-icons/bs'
+export { FiChevronsDown as ArrowDownIcon, FiPlus as AddIcon } from 'react-icons/fi'
 export {
   GoMute as VolumeMuteIcon,
   GoUnmute as VolumeUnmuteIcon,
@@ -21,10 +21,12 @@ export {
   MdSkipNext as NextAudioIcon,
   MdSkipPrevious as PrevAudioIcon,
   MdViewHeadline as OrderPlayIcon,
+  MdTextFields as LyricIcon
 } from 'react-icons/md'
 export {
   RiDeleteBinLine as DeleteIcon,
   RiPlayList2Fill as PlayListsIcon,
+  RiShoppingCart2Line as CartIcon
 } from 'react-icons/ri'
 export {
   TiArrowShuffle as ShufflePlayIcon,

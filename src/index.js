@@ -36,6 +36,9 @@ import {
   ShufflePlayIcon,
   VolumeMuteIcon,
   VolumeUnmuteIcon,
+  AddIcon,
+  DotsIcon,
+  CartIcon
 } from './components/Icon'
 import AudioPlayerMobile from './components/PlayerMobile'
 import PlayModel from './components/PlayModel'
@@ -71,6 +74,7 @@ const DEFAULT_ICON = {
   toggle: <FaMinusSquareOIcon />,
   lyric: <LyricIcon />,
   volume: <VolumeUnmuteIcon size={26} />,
+
   mute: <VolumeMuteIcon size={26} />,
   next: <NextAudioIcon />,
   prev: <PrevAudioIcon />,
@@ -83,6 +87,9 @@ const DEFAULT_ICON = {
   loading: <LoadIcon />,
   packUpPanelMobile: <ArrowDownIcon size={26} />,
   empty: <EmptyIcon />,
+  add: <AddIcon />,
+  dots: <DotsIcon />,
+  cart: <CartIcon />
 }
 
 export default class ReactJkMusicPlayer extends PureComponent {
@@ -259,6 +266,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
       audioListsPanelVisible,
       theme,
       name,
+      subtitle,
+      price,
       cover,
       singer,
       musicSrc,
@@ -437,6 +446,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
 
     const container = getContainer() || document.body
     const audioTitle = this.getAudioTitle()
+    const audioSubtitle = this.getAudioSubtitle()
 
     if (isPlayDestroyed) {
       return null
@@ -461,6 +471,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
             playing={playing}
             loading={loading}
             name={name}
+            subtitle={subtitle}
+            price={price}
             singer={singer}
             cover={cover}
             themeSwitch={ThemeSwitchComponent}
@@ -488,6 +500,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
             locale={locale}
             toggleMode={toggleMode}
             renderAudioTitle={this.renderAudioTitle}
+            renderAudioSubtitle={this.renderAudioSubtitle}
+            renderAudioPrice={this.renderAudioPrice}
           />
         )}
 
@@ -511,31 +525,50 @@ export default class ReactJkMusicPlayer extends PureComponent {
             })}
           >
             <section className="panel-content">
-              {/* lgtm [js/trivial-conditional] */}
-              {(!autoHiddenCover || (autoHiddenCover && cover)) && (
-                <div
-                  className={cls('img-content', 'img-rotate', {
-                    'img-rotate-pause': !playing || !cover,
-                  })}
-                  style={{ backgroundImage: `url(${cover})` }}
-                  onClick={() => this.onCoverClick()}
-                />
-              )}
-              <div className="progress-bar-content">
-                <span className="audio-title" title={audioTitle}>
-                  {this.renderAudioTitle()}
-                </span>
-                <section className="audio-main">
-                  <span className="current-time" title={formattedCurrentTime}>
-                    {loading ? '--' : formattedCurrentTime}
+              <div className="left-section">
+                {/* lgtm [js/trivial-conditional] */}
+                {(!autoHiddenCover || (autoHiddenCover && cover)) && (
+                  <div
+                    className={cls('img-content', 'img-rotate', {
+                      'img-rotate-pause': !playing || !cover,
+                    })}
+                    style={{ backgroundImage: `url(${cover})` }}
+                    onClick={() => this.onCoverClick()}
+                  />
+                )}
+                <div className="progress-bar-content">
+                  <span className="audio-title" title={audioTitle}>
+                    {this.renderAudioTitle()}
                   </span>
-                  <div className="progress-bar">{ProgressBar}</div>
-                  <span className="duration" title={formattedAudioDuration}>
-                    {loading ? '--' : formattedAudioDuration}
+                  <span className="audio-subtitle" title={audioSubtitle}>
+                    {this.renderAudioSubtitle()}
                   </span>
-                </section>
+                  {/* TRACK TIME BAR
+                  <section className="audio-main">
+                    <span className="current-time" title={formattedCurrentTime}>
+                      {loading ? '--' : formattedCurrentTime}
+                    </span>
+                    <div className="progress-bar">{ProgressBar}</div>
+                    <span className="duration" title={formattedAudioDuration}>
+                      {loading ? '--' : formattedAudioDuration}
+                    </span>
+                  </section>*/}
+                </div>
+                <div className="audio-add">
+                  {this.iconMap.add}
+                </div>
+                <div className="audio-dots-menu">
+                  {this.iconMap.dots}
+                </div>
+                <div className="audio-buy-button">
+                  {this.iconMap.cart}
+                  <span>
+                    {this.renderAudioPrice()}
+                  </span>
+                </div>
               </div>
-              <div className="player-content">
+              
+              <div className="center-section">
                 {loading ? (
                   this.iconMap.loading
                 ) : showPlay ? (
@@ -567,7 +600,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
                     </span>
                   </span>
                 ) : undefined}
+              </div>
 
+              <div className="right-section">
                 {ReloadComponent}
                 {DownloadComponent}
                 {ThemeSwitchComponent}
@@ -602,10 +637,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
                   title={locale.playListsText}
                   onClick={this.openAudioListsPanel}
                 >
-                  <span className="audio-lists-icon">
-                    {this.iconMap.playLists}
-                  </span>
-                  <span className="audio-lists-num">{audioLists.length}</span>
+                  {this.iconMap.playLists}
                 </span>
 
                 {toggleMode && (
@@ -703,12 +735,42 @@ export default class ReactJkMusicPlayer extends PureComponent {
     return audioTitle || `${name}${singer ? ` - ${singer}` : ''}`
   }
 
+  getAudioSubtitle = () => {
+    const { audioTitle } = this.locale || {}
+    const { subtitle } = this.state
+    if (typeof audioTitle === 'function' && this.audio) {
+      return audioTitle(this.getBaseAudioInfo())
+    }
+    return audioTitle || subtitle
+  }
+
+  getAudioPrice = () => {
+    const { price } = this.state
+    return price
+  }
+
   renderAudioTitle = () => {
     const { isMobile, name } = this.state
     if (this.props.renderAudioTitle) {
       return this.props.renderAudioTitle(this.getBaseAudioInfo(), isMobile)
     }
     return isMobile ? name : this.getAudioTitle()
+  }
+
+  renderAudioSubtitle = () => {
+    const { isMobile, subtitle } = this.state
+    if (this.props.renderAudioSubtitle) {
+      return this.props.renderAudioSubtitle(this.getBaseAudioInfo(), isMobile)
+    }
+    return isMobile ? subtitle : this.getAudioSubtitle()
+  }
+
+  renderAudioPrice = () => {
+    const { isMobile, price } = this.state
+    if (this.props.renderAudioPrice) {
+      return this.props.renderAudioPrice(this.getBaseAudioInfo(), isMobile)
+    }
+    return `$ ${isMobile ? price : this.getAudioPrice()}`
   }
 
   toggleAudioLyric = () => {
@@ -1121,6 +1183,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
     const {
       cover,
       name,
+      subtitle,
+      price,
       musicSrc,
       soundValue,
       lyric,
@@ -1146,6 +1210,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
       ...currentAudioListInfo,
       cover,
       name,
+      subtitle,
+      price,
       musicSrc,
       volume: soundValue,
       currentTime,
@@ -1494,6 +1560,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
       soundValue,
       playMode,
       name,
+      subtitle,
+      price,
       cover,
       singer,
       musicSrc,
@@ -1505,6 +1573,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
       playMode,
       soundValue,
       name,
+      subtitle,
+      price,
       cover,
       singer,
       musicSrc,
@@ -1525,6 +1595,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
       currentTime: 0,
       playMode: playMode || defaultPlayMode || PLAY_MODE.order,
       name: '',
+      subtitle: '',
+      price: '',
       cover: '',
       singer: '',
       musicSrc: '',
@@ -1634,11 +1706,13 @@ export default class ReactJkMusicPlayer extends PureComponent {
   _getPlayInfo = (audioLists = []) => {
     const playId = this.getPlayId(audioLists)
 
-    const { name = '', cover = '', singer = '', musicSrc = '', lyric = '' } =
+    const { name = '', subtitle = '', price = '', cover = '', singer = '', musicSrc = '', lyric = '' } =
       audioLists.find(({ id }) => id === playId) || {}
 
     return {
       name,
+      subtitle,
+      price,
       cover,
       singer,
       musicSrc,

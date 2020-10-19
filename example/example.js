@@ -13,19 +13,17 @@ import './example.less'
 const audioList1 = [
   {
     name: 'Despacito',
-    singer: 'Luis Fonsi',
+    subtitle: 'Descripcion 1',
+    price: 499,
+    //singer: 'Luis Fonsi',
     cover:
       'http://res.cloudinary.com/alick/image/upload/v1502689731/Despacito_uvolhp.jpg',
     musicSrc:
       'http://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3',
-    // support async fetch music src. eg.
-    // musicSrc: async () => {
-    //   return await fetch('/api')
-    // },
   },
   {
     name: 'Dorost Nemisham',
-    singer: 'Sirvan Khosravi',
+    //singer: 'Sirvan Khosravi',
     cover:
       'https://res.cloudinary.com/ehsanahmadi/image/upload/v1573758778/Sirvan-Khosravi-Dorost-Nemisham_glicks.jpg',
     musicSrc:
@@ -183,7 +181,7 @@ const options = {
   autoPlay: false,
 
   // Whether you can switch between two modes, full => mini  or mini => full   [type 'Boolean' default 'true']
-  toggleMode: true,
+  toggleMode: false,
 
   // audio cover is show of the "mini" mode [type `Boolean` default 'true']
   showMiniModeCover: true,
@@ -198,31 +196,31 @@ const options = {
   seeked: true,
 
   // Display chrome media session.  [type `Boolean` default `false`]
-  showMediaSession: true,
+  showMediaSession: false,
 
   // Displays the audio load progress bar.  [type `Boolean` default `true`]
-  showProgressLoadBar: true,
+  showProgressLoadBar: false,
 
   // play button display of the audio player panel   [type `Boolean` default `true`]
   showPlay: true,
 
   // reload button display of the audio player panel   [type `Boolean` default `true`]
-  showReload: true,
+  showReload: false,
 
   // download button display of the audio player panel   [type `Boolean` default `true`]
-  showDownload: true,
+  showDownload: false,
 
   // loop button display of the audio player panel   [type `Boolean` default `true`]
-  showPlayMode: true,
+  showPlayMode: false,
 
   // theme toggle switch  display of the audio player panel   [type `Boolean` default `true`]
-  showThemeSwitch: true,
+  showThemeSwitch: false,
 
   // lyric display of the audio player panel   [type `Boolean` default `false`]
   showLyric: true,
 
   // destroy player button display  [type `Boolean` default `false`]
-  showDestroy: true,
+  showDestroy: false,
 
   // Extensible custom content       [type 'Array' default '-' ]
   extendsContent: null,
