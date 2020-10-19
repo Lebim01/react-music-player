@@ -462,6 +462,8 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
 
       var _ref4 = audioLists[playIndex] || {},
           name = _ref4.name,
+          subtitle = _ref4.subtitle,
+          price = _ref4.price,
           cover = _ref4.cover,
           musicSrc = _ref4.musicSrc,
           singer = _ref4.singer,
@@ -472,6 +474,8 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
         _this.setState({
           name: name,
           cover: cover,
+          subtitle: subtitle,
+          price: price,
           musicSrc: originMusicSrc,
           singer: singer,
           playId: playId,
