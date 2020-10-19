@@ -1974,6 +1974,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
       ),
     ]
     this.initPlayInfo(newAudioLists)
+    this.loadNewAudioLists({ ...this.props, audioLists: newAudioLists })
     this.bindEvents(this.audio)
     this.props.onAudioListsChange &&
       this.props.onAudioListsChange(

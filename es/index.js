@@ -1583,6 +1583,10 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
 
       _this.initPlayInfo(newAudioLists);
 
+      _this.loadNewAudioLists(_objectSpread(_objectSpread({}, _this.props), {}, {
+        audioLists: newAudioLists
+      }));
+
       _this.bindEvents(_this.audio);
 
       _this.props.onAudioListsChange && _this.props.onAudioListsChange(_this.state.playId, audioLists, _this.getBaseAudioInfo());
