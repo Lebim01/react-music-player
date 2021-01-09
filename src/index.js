@@ -170,9 +170,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
     autoHiddenCover: false, // 当前播放歌曲没有封面时是否自动隐藏
     onBeforeAudioDownload: () => {}, // 下载前转换音频地址等
     spaceBar: false, // 是否可以通过空格键 控制播放暂停
-    showDestroy: false,
+    showDestroy: true,
     showMediaSession: false,
-    locale: LOCALE.en_US,
+    locale: LOCALE.es_ES,
     responsive: true,
     icon: DEFAULT_ICON,
     quietUpdate: false, // 更新后的播放列表如果有当前正在播放的歌曲不打断当前播放状态
@@ -186,7 +186,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
     if (typeof locale === 'string') {
       return LOCALE_CONFIG[this.props.locale]
     }
-    return locale ? { ...LOCALE_CONFIG[LOCALE.en_US], ...locale } : {}
+    return locale ? { ...LOCALE_CONFIG[LOCALE.es_ES], ...locale } : {}
   }
 
   get audioDuration() {
@@ -563,16 +563,6 @@ export default class ReactJkMusicPlayer extends PureComponent {
                   <span className="audio-subtitle" title={audioSubtitle}>
                     {this.renderAudioSubtitle()}
                   </span>
-                  {/* TRACK TIME BAR
-                  <section className="audio-main">
-                    <span className="current-time" title={formattedCurrentTime}>
-                      {loading ? '--' : formattedCurrentTime}
-                    </span>
-                    <div className="progress-bar">{ProgressBar}</div>
-                    <span className="duration" title={formattedAudioDuration}>
-                      {loading ? '--' : formattedAudioDuration}
-                    </span>
-                  </section>*/}
                 </div>
                 <div className="audio-add">
                   {this.iconMap.add}
@@ -593,33 +583,46 @@ export default class ReactJkMusicPlayer extends PureComponent {
                   this.iconMap.loading
                 ) : showPlay ? (
                   <>
-                    {RandomModeComponent}
-                    <span
-                      className="group prev-audio"
-                      title={locale.previousTrackText}
-                      onClick={this.onPlayPrevAudio}
-                    >
-                      {this.iconMap.prev}
-                    </span>
-                    <span
-                      className={`group play-btn ${playing ? 'font-acent' : ''}`}
-                      onClick={this.onTogglePlay}
-                      title={
-                        playing
-                          ? locale.clickToPauseText
-                          : locale.clickToPlayText
-                      }
-                    >
-                      {playing ? this.iconMap.pause : this.iconMap.play}
-                    </span>
-                    <span
-                      className="group next-audio"
-                      title={locale.nextTrackText}
-                      onClick={this.onPlayNextAudio}
-                    >
-                      {this.iconMap.next}
-                    </span>
-                    {LoopModeComponent}
+                    <div className="progress-bar">
+                      <section className="audio-main">
+                        <span className="current-time" title={formattedCurrentTime}>
+                          {loading ? '--' : formattedCurrentTime}
+                        </span>
+                        <div className="progress-bar">{ProgressBar}</div>
+                        <span className="duration" title={formattedAudioDuration}>
+                          {loading ? '--' : formattedAudioDuration}
+                        </span>
+                      </section>
+                    </div>
+                    <div className="buttons-actions">
+                      {RandomModeComponent}
+                      <span
+                        className="group prev-audio"
+                        title={locale.previousTrackText}
+                        onClick={this.onPlayPrevAudio}
+                      >
+                        {this.iconMap.prev}
+                      </span>
+                      <span
+                        className={`group play-btn ${playing ? 'font-acent' : ''}`}
+                        onClick={this.onTogglePlay}
+                        title={
+                          playing
+                            ? locale.clickToPauseText
+                            : locale.clickToPlayText
+                        }
+                      >
+                        {playing ? this.iconMap.pause : this.iconMap.play}
+                      </span>
+                      <span
+                        className="group next-audio"
+                        title={locale.nextTrackText}
+                        onClick={this.onPlayNextAudio}
+                      >
+                        {this.iconMap.next}
+                      </span>
+                      {LoopModeComponent}
+                    </div>
                   </>
                 ) : undefined}
               </div>
@@ -1175,8 +1178,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
   }
 
   onOpenPanel = () => {
-    const { toggleMode, spaceBar } = this.props
-    if (toggleMode) {
+    const { toggleMode, showDestroy, spaceBar } = this.props
+    if (toggleMode || showDestroy) {
       this.setState({ toggle: true })
       this.props.onModeChange && this.props.onModeChange(MODE.FULL)
       if (spaceBar && this.player.current) {
@@ -1192,7 +1195,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
   }
 
   onDestroyPlayer = () => {
-    if (this.props.onBeforeDestroy) {
+    /*if (this.props.onBeforeDestroy) {
       const onBeforeDestroy = Promise.resolve(
         this.props.onBeforeDestroy(
           this.state.playId,
@@ -1211,7 +1214,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
       }
       return
     }
-    this._onDestroyPlayer()
+    this._onDestroyPlayer()*/
+
+    this.onHidePanel()
   }
 
   _onDestroyPlayer = () => {
