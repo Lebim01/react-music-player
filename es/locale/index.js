@@ -6,5 +6,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 import LOCALE from '../config/locale';
 import en_US from './en_US';
 import zh_CN from './zh_CN';
-var locale = (_locale = {}, _defineProperty(_locale, LOCALE.en_US, en_US), _defineProperty(_locale, LOCALE.zh_CN, zh_CN), _locale);
+import es_ES from './es_ES';
+var locale = (_locale = {}, _defineProperty(_locale, LOCALE.en_US, en_US), _defineProperty(_locale, LOCALE.zh_CN, zh_CN), _defineProperty(_locale, LOCALE.es_ES, es_ES), _locale);
 export default locale;

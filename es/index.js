@@ -136,7 +136,7 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
         return LOCALE_CONFIG[this.props.locale];
       }
 
-      return locale ? _objectSpread(_objectSpread({}, LOCALE_CONFIG[LOCALE.en_US]), locale) : {};
+      return locale ? _objectSpread(_objectSpread({}, LOCALE_CONFIG[LOCALE.es_ES]), locale) : {};
     }
   }, {
     key: "audioDuration",
@@ -771,9 +771,10 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "onOpenPanel", function () {
       var _this$props = _this.props,
           toggleMode = _this$props.toggleMode,
+          showDestroy = _this$props.showDestroy,
           spaceBar = _this$props.spaceBar;
 
-      if (toggleMode) {
+      if (toggleMode || showDestroy) {
         _this.setState({
           toggle: true
         });
@@ -800,20 +801,26 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "onDestroyPlayer", function () {
-      if (_this.props.onBeforeDestroy) {
-        var onBeforeDestroy = Promise.resolve(_this.props.onBeforeDestroy(_this.state.playId, _this.state.audioLists, _this.getBaseAudioInfo()));
-
-        if (onBeforeDestroy && onBeforeDestroy.then) {
-          onBeforeDestroy.then(function () {
-            _this._onDestroyPlayer();
-          }) // ignore unhandledrejection handler
-          ["catch"](function () {});
+      /*if (this.props.onBeforeDestroy) {
+        const onBeforeDestroy = Promise.resolve(
+          this.props.onBeforeDestroy(
+            this.state.playId,
+            this.state.audioLists,
+            this.getBaseAudioInfo(),
+          ),
+        )
+          if (onBeforeDestroy && onBeforeDestroy.then) {
+          onBeforeDestroy
+            .then(() => {
+              this._onDestroyPlayer()
+            })
+            // ignore unhandledrejection handler
+            .catch(() => {})
         }
-
-        return;
+        return
       }
-
-      _this._onDestroyPlayer();
+      this._onDestroyPlayer()*/
+      _this.onHidePanel();
     });
 
     _defineProperty(_assertThisInitialized(_this), "_onDestroyPlayer", function () {
@@ -2197,7 +2204,21 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
         className: "audio-buy-button"
       }, this.iconMap.cart, /*#__PURE__*/React.createElement("span", null, this.renderAudioPrice()))), /*#__PURE__*/React.createElement("div", {
         className: "center-section"
-      }, loading ? this.iconMap.loading : showPlay ? /*#__PURE__*/React.createElement(React.Fragment, null, RandomModeComponent, /*#__PURE__*/React.createElement("span", {
+      }, loading ? this.iconMap.loading : showPlay ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+        className: "progress-bar"
+      }, /*#__PURE__*/React.createElement("section", {
+        className: "audio-main"
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "current-time",
+        title: formattedCurrentTime
+      }, loading ? '--' : formattedCurrentTime), /*#__PURE__*/React.createElement("div", {
+        className: "progress-bar"
+      }, ProgressBar), /*#__PURE__*/React.createElement("span", {
+        className: "duration",
+        title: formattedAudioDuration
+      }, loading ? '--' : formattedAudioDuration))), /*#__PURE__*/React.createElement("div", {
+        className: "buttons-actions"
+      }, RandomModeComponent, /*#__PURE__*/React.createElement("span", {
         className: "group prev-audio",
         title: locale.previousTrackText,
         onClick: this.onPlayPrevAudio
@@ -2209,7 +2230,7 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
         className: "group next-audio",
         title: locale.nextTrackText,
         onClick: this.onPlayNextAudio
-      }, this.iconMap.next), LoopModeComponent) : undefined), /*#__PURE__*/React.createElement("div", {
+      }, this.iconMap.next), LoopModeComponent)) : undefined), /*#__PURE__*/React.createElement("div", {
         className: "right-section"
       }, ReloadComponent, DownloadComponent, ThemeSwitchComponent, extendsContent || null, /*#__PURE__*/React.createElement("span", {
         className: "group play-sounds",
@@ -2445,9 +2466,9 @@ _defineProperty(ReactJkMusicPlayer, "defaultProps", {
   // 下载前转换音频地址等
   spaceBar: false,
   // 是否可以通过空格键 控制播放暂停
-  showDestroy: false,
+  showDestroy: true,
   showMediaSession: false,
-  locale: LOCALE.en_US,
+  locale: LOCALE.es_ES,
   responsive: true,
   icon: DEFAULT_ICON,
   quietUpdate: false,
