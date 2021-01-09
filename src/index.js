@@ -583,12 +583,12 @@ export default class ReactJkMusicPlayer extends PureComponent {
                   this.iconMap.loading
                 ) : showPlay ? (
                   <>
-                    <div className="progress-bar">
+                    <div className="player-progress-bar">
                       <section className="audio-main">
                         <span className="current-time" title={formattedCurrentTime}>
                           {loading ? '--' : formattedCurrentTime}
                         </span>
-                        <div className="progress-bar">{ProgressBar}</div>
+                        <div className="track-progress-bar">{ProgressBar}</div>
                         <span className="duration" title={formattedAudioDuration}>
                           {loading ? '--' : formattedAudioDuration}
                         </span>

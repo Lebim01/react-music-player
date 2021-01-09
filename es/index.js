@@ -2205,14 +2205,14 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
       }, this.iconMap.cart, /*#__PURE__*/React.createElement("span", null, this.renderAudioPrice()))), /*#__PURE__*/React.createElement("div", {
         className: "center-section"
       }, loading ? this.iconMap.loading : showPlay ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-        className: "progress-bar"
+        className: "player-progress-bar"
       }, /*#__PURE__*/React.createElement("section", {
         className: "audio-main"
       }, /*#__PURE__*/React.createElement("span", {
         className: "current-time",
         title: formattedCurrentTime
       }, loading ? '--' : formattedCurrentTime), /*#__PURE__*/React.createElement("div", {
-        className: "progress-bar"
+        className: "track-progress-bar"
       }, ProgressBar), /*#__PURE__*/React.createElement("span", {
         className: "duration",
         title: formattedAudioDuration
