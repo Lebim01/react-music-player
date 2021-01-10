@@ -1217,6 +1217,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
     this._onDestroyPlayer()*/
 
     this.onHidePanel()
+    this.onAudioPause()
+    this.audio.pause()
   }
 
   _onDestroyPlayer = () => {

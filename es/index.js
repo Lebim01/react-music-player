@@ -821,6 +821,10 @@ var ReactJkMusicPlayer = /*#__PURE__*/function (_PureComponent) {
       }
       this._onDestroyPlayer()*/
       _this.onHidePanel();
+
+      _this.onAudioPause();
+
+      _this.audio.pause();
     });
 
     _defineProperty(_assertThisInitialized(_this), "_onDestroyPlayer", function () {
